@@ -2,6 +2,7 @@ from typing import Dict
 import numpy as np
 from typing import Generator, List
 import os
+import constants
 
 CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
@@ -114,15 +115,18 @@ class DataReader:
     ######################################## YOUR CODE HERE ##################################################
         # output generator -- use 'yield' keyword 
         # generate each row: dictionary comprehension
+        col_names = [constants.OutDataColNames.STOCK_CODE, constants.OutDataColNames.DESCRIPTION,
+                 constants.OutDataColNames.UNIT_PRICE, constants.OutDataColNames.QUANTITY,
+                 constants.OutDataColNames.TOTAL_PRICE, constants.OutDataColNames.COUNTRY,
+                 constants.OutDataColNames.INVOICE_NO, constants.OutDataColNames.DATE]
         
         for n_row, row in enumerate(open(self._fp, "r")):
             row_vals = row.strip('\n').split(self._sep)
-            
             # define the row_vals dictionary 
-            row_vals = #### [YOUR CODE HERE] ####
-            row_vals['n_row'] = #### [YOUR CODE HERE] ####
+            row_dict = {header: value for header, value in zip(col_names, row_vals)}
+            row_dict['n_row'] = n_row
 
-            # return results: 
+            yield row_dict
             #### [YOUR CODE HERE] ####
     
     ######################################## YOUR CODE HERE ##################################################
